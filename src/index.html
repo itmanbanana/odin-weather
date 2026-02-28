@@ -6,6 +6,23 @@
     <title>Template</title>
   </head>
   <body>
-    <h1>Template</h1>
+    <header>
+      <div class="header-title">Odin Weather</div>
+    </header>
+    <div class="location-search">
+      <form action="" class="form-location-search">
+        <div class="form-row">
+          <label for="location-search">
+            Type the name of any city: 
+            <input type="text" id="location-search-input" placeholder="City">
+          </label>
+        </div>
+        <button type="submit" class="location-search-button">Find Locations</button>
+      </form>
+    </div>
+    <div class="location-results">
+      <ul class="location-list"></ul>
+    </div>
+    <div class="weather"></div>
   </body>
 </html>

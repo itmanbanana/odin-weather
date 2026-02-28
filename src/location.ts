@@ -1,11 +1,11 @@
-import type { LocationResponse } from "./types/location_result.js";
+import type { LocationResponse } from "./types/location_response.js";
 
 const Location = (() => {
   const apiCall = async (url: string) => {
     try {
       const res = await fetch(url, {
         method: "GET",
-        headers: { "X-Api-Key": process.env.GEO_API_KEY }, 
+        headers: new Headers({ "X-Api-Key": process.env.GEO_API_KEY } as HeadersInit), 
         mode: "cors",
         cache: "default",
       })

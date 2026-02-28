@@ -3,7 +3,7 @@ const Location = (() => {
         try {
             const res = await fetch(url, {
                 method: "GET",
-                headers: { "X-Api-Key": process.env.GEO_API_KEY },
+                headers: new Headers({ "X-Api-Key": process.env.GEO_API_KEY }),
                 mode: "cors",
                 cache: "default",
             });

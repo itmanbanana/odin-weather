@@ -1,4 +1,4 @@
-import type { LocationResponse } from "./types/location_result.js";
+import type { LocationResponse } from "./types/location_response.js";
 declare const Location: {
     query: (city?: string) => Promise<LocationResponse[]>;
 };

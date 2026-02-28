@@ -1,15 +1,6 @@
+import type { WeatherData } from "./types/weather_data.js";
 declare const Weather: {
-    query: (lat: number, lon: number) => Promise<{
-        time: string;
-        temperature: string;
-        apparentTemperature: string;
-        isDay: boolean;
-        weatherDescription: string;
-        windDirection: string;
-        windGusts: string;
-        windSpeed: string;
-        surfacePressure: string;
-    }>;
+    query: (lat: number, lon: number) => Promise<WeatherData>;
 };
 export { Weather };
 //# sourceMappingURL=weather.d.ts.map
