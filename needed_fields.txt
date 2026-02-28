@@ -1,0 +1,12 @@
+Weather App - Needed Fields from API:
+- Current weather:
+  - Temperature (2m)
+  - Relative Humidity (2m)
+  - Day/Night 
+  - Apparent Temperature
+  - Wind Speed, Wind Direction, Wind Gusts
+  - Precipitation
+  - Rain
+  - Showers
+  - Snowfall
+  - Surface Pressure
