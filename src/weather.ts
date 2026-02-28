@@ -1,4 +1,6 @@
-const weatherAPI = (() => {
+import type { WeatherResponse } from "./types/weather_response.js";
+
+const Weather = (() => {
   const WEATHER_CODE_MAP: Record<number, string> = {
     0: "Clear sky",
 
@@ -42,25 +44,52 @@ const weatherAPI = (() => {
     99: "Thunderstorm with hail (Heavy)",
   };
 
-  const getWeather = async (url: string) => {
-      try {
-        const res = await fetch(url, {
-          method: "GET",
-          mode: "cors",
-          cache: "default",
-        })
-        return await res.json();
-      } catch {
+  const apiCall = async (url: string) => {
+    try {
+      const res = await fetch(url, {
+        method: "GET",
+        mode: "cors",
+        cache: "default",
+      })
+      return await res.json();
+    } catch {
         throw new Error("Error fetching data");
-      }
     }
+  }
+
+  type WeatherData = {
+    time: string;
+    temperature: string;
+    apparentTemperature: string;
+    isDay: boolean;
+    weatherDescription: string;
+    windDirection: string;
+    windGusts: string;
+    windSpeed: string;
+    surfacePressure: string;
+  };
+
+  const parseData = (data: WeatherResponse): WeatherData => {
+    return {
+      time: `${data.current.time} ${data.timezone}`,
+      temperature: `${data.current.temperature_2m} ${data.current_units.temperature_2m}`,
+      apparentTemperature: `${data.current.apparent_temperature} ${data.current_units.apparent_temperature}`,
+      isDay: (data.current.is_day) ? true : false,
+      weatherDescription: WEATHER_CODE_MAP[data.current.weather_code],
+      windDirection: `${data.current.wind_direction_10m}${data.current_units.wind_direction_10m}`,
+      windGusts: `${data.current.wind_gusts_10m} ${data.current_units.wind_gusts_10m}`,
+      windSpeed: `${data.current.wind_speed_10m} ${data.current_units.wind_speed_10m}`,
+      surfacePressure: `${data.current.surface_pressure} ${data.current_units.surface_pressure}`
+    } as WeatherData;
+  }
 
   const query = async (lat: number, lon: number) => {
     const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,wind_speed_10m,wind_direction_10m,wind_gusts_10m,weather_code,surface_pressure`;
-    return await getWeather(url);
+    const rawData = await apiCall(url) as WeatherResponse;
+    return parseData(rawData);
   }
 
-  return { getWeather, query, WEATHER_CODE_MAP }
+  return { query }
 })();
 
-export { weatherAPI };
+export { Weather };

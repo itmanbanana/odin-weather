@@ -1,0 +1,1 @@
+{"version":3,"file":"location_response.d.ts","sourceRoot":"","sources":["location_response.ts"],"names":[],"mappings":"AAAA,MAAM,MAAM,gBAAgB,GAAG;IAC7B,IAAI,EAAE,MAAM,CAAC;IACb,QAAQ,EAAE,MAAM,CAAC;IACjB,SAAS,EAAE,MAAM,CAAC;IAClB,OAAO,EAAE,MAAM,CAAC;IAChB,KAAK,EAAE,MAAM,CAAA;CACd,CAAA"}

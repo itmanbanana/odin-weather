@@ -1,6 +1,13 @@
-import { weatherAPI } from "./weather.js";
+import { Location } from "./location.js";
+import { Weather } from "./weather.js";
   
-let data = weatherAPI.query(28.54, -81.38)
+// let data = Weather.query(28.54, -81.38)
+// .then((res: any) => {
+//   console.log(res);
+// })
+// .catch((error) => console.error(error));
+
+let loc = Location.query("London")
 .then((res: any) => {
   console.log(res);
 })

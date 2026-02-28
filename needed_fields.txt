@@ -10,3 +10,22 @@ Weather App - Needed Fields from API:
   - Showers
   - Snowfall
   - Surface Pressure
+
+
+- current.time
+- current.timezone
+- current.temperature_2m
+- current.apparent_temperature
+- current.is_day
+- current.relative_humidity_2m
+- current.weather_code
+- current.wind_direction_10m
+- current.wind_gusts_10m
+- current.wind_speed_10m
+- current_units.temperature_2m
+- current_units.relative_humidity_2m
+- current_units.apparent_temperature
+- current_units.wind_direction_10m
+- current_units.wind_gusts_10m
+- current_units.wind_speed_10m
+- current_units.surface_pressure 

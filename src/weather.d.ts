@@ -1,7 +1,15 @@
-declare const weatherAPI: {
-    getWeather: (url: string) => Promise<unknown>;
-    query: (lat: number, lon: number) => Promise<unknown>;
-    WEATHER_CODE_MAP: Record<number, string>;
+declare const Weather: {
+    query: (lat: number, lon: number) => Promise<{
+        time: string;
+        temperature: string;
+        apparentTemperature: string;
+        isDay: boolean;
+        weatherDescription: string;
+        windDirection: string;
+        windGusts: string;
+        windSpeed: string;
+        surfacePressure: string;
+    }>;
 };
-export { weatherAPI };
+export { Weather };
 //# sourceMappingURL=weather.d.ts.map
