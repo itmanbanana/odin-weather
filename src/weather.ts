@@ -1,5 +1,6 @@
 import type { WeatherResponse } from "./types/weather_response.js";
 import type { WeatherData, WeatherStatus } from "./types/weather_data.js";
+import { format } from "date-fns";
 
 import clearDay from "./images/weather_clear_day.svg";
 import clearNight from "./images/weather_clear_night.svg";
@@ -175,6 +176,8 @@ const Weather = (() => {
     }
   };
 
+  const windDirectionDegrees: string[] = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"]
+
   const apiCall = async (url: string) => {
     try {
       const res = await fetch(url, {
@@ -190,22 +193,27 @@ const Weather = (() => {
 
   const parseData = (data: WeatherResponse): WeatherData => {
     return {
-      time: `${data.current.time} ${data.timezone}`,
+      time: `${format(new Date(data.current.time), "hh:mm a MMM do, yyyy ")} ${data.timezone_abbreviation}`,
       temperature: `${data.current.temperature_2m} ${data.current_units.temperature_2m}`,
-      apparentTemperature: `${data.current.apparent_temperature} ${data.current_units.apparent_temperature}`,
+      temperatureHigh: `${data.daily.temperature_2m_max[0]} ${data.daily_units.temperature_2m_max}`,
+      temperatureLow: `${data.daily.temperature_2m_min[0]} ${data.daily_units.temperature_2m_min}`,
+      apparentTemperature: `Feels like: ${data.current.apparent_temperature} ${data.current_units.apparent_temperature}`,
       isDay: (data.current.is_day) ? true : false,
       weatherStatus: WEATHER_CODE_MAP[data.current.weather_code],
-      windDirection: `${data.current.wind_direction_10m}${data.current_units.wind_direction_10m}`,
+      windDirection: `${data.current.wind_direction_10m}${data.current_units.wind_direction_10m.replace("%", "°")} ${windDirectionDegrees[Math.floor(+data.current.wind_direction_10m / 22.5)]}`,
       windGusts: `${data.current.wind_gusts_10m} ${data.current_units.wind_gusts_10m}`,
       windSpeed: `${data.current.wind_speed_10m} ${data.current_units.wind_speed_10m}`,
-      surfacePressure: `${data.current.surface_pressure} ${data.current_units.surface_pressure}`
+      surfacePressure: `${data.current.surface_pressure} ${data.current_units.surface_pressure}`,
+      sunrise: `${format(new Date(data.daily.sunrise[0]!), "hh:mm a")}`,
+      sunset: `${format(new Date(data.daily.sunset[0]!), "hh:mm a")}`
     } as WeatherData;
   }
 
   const query = async (lat: number, lon: number) => {
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,wind_speed_10m,wind_direction_10m,wind_gusts_10m,weather_code,surface_pressure`;
-    const rawData = await apiCall(url) as WeatherResponse;
-    return parseData(rawData);
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=sunrise,sunset,daylight_duration,temperature_2m_max,temperature_2m_min&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,wind_speed_10m,wind_direction_10m,wind_gusts_10m,weather_code,surface_pressure&timezone=auto`;
+    const rawData = await apiCall(url);
+    const processedData = parseData(rawData) as WeatherData;
+    return processedData;
   }
 
   return { query }

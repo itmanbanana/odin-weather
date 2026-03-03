@@ -6,6 +6,8 @@ export type WeatherStatus = {
 export type WeatherData = {
     time: string;
     temperature: string;
+    temperatureHigh: string;
+    temperatureLow: string;
     apparentTemperature: string;
     isDay: boolean;
     weatherStatus: WeatherStatus;
@@ -13,5 +15,7 @@ export type WeatherData = {
     windGusts: string;
     windSpeed: string;
     surfacePressure: string;
+    sunrise: string;
+    sunset: string;
 };
 //# sourceMappingURL=weather_data.d.ts.map

@@ -1,16 +1,32 @@
 :root {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-size: 16px;
+
+  --col-light: #eee;
+  --col-dark: #333;
+  --col-mid-light: #ccc;
+  --col-mid: #aaa;
+  --col-mid-dark: #777;
 }
 
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+
+  background-color: var(--col-light);
+  color: var(--col-dark);
 }
 
 ul {
   list-style-type: none;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 header {
@@ -19,6 +35,43 @@ header {
   align-items: center;
 
   padding: 2rem 0;
+}
+
+button {
+  appearance: none;
+  border: none;
+  background: none;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+input {
+  appearance: none;
+}
+
+.weather-icon,
+.weather-sunrise-icon,
+.weather-sunset-icon {
+  background: none;
+  filter: brightness(0) saturate(100%) invert(12%) sepia(10%) saturate(18%) hue-rotate(347deg) brightness(102%) contrast(80%);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --col-dark: #eee;
+    --col-light: #333;
+    --col-mid-dark: #ccc;
+    --col-mid: #aaa;
+    --col-mid-light: #777;
+  }
+
+  .weather-icon,
+  .weather-sunrise-icon,
+  .weather-sunset-icon {
+    filter: brightness(0) saturate(100%) invert(100%) sepia(3%) saturate(4729%) hue-rotate(336deg) brightness(113%) contrast(89%);
+  }
 }
 
 .header-title {
@@ -31,24 +84,161 @@ header {
   margin-bottom: 2rem;
 }
 
+input#location-search-input {
+  font-size: 1.125rem;
+  padding: 0.5rem 0.5rem;
+  border: 0.125rem solid var(--col-dark);
+  border-radius: 0.5rem;
+  min-width: clamp(40ch, 25vw, 60ch);
+}
+
+.location-search-button {
+  width: 2rem;
+  height: 2rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.location-search-image {
+  width: 85%;
+  height: 85%;
+}
+
+.location-search-image:hover {
+  width: 100%;
+  height: 100%;
+}
+
 .form-location-search {
   display: flex;
-  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.location-results {
+  display: flex;
+  justify-content: center;
+
+  width: 50%;
 }
 
 .location-list {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 1rem;
 
-  margin-left: 2rem;
+  width: 100%;
 }
 
 .location-list-item {
   display: flex;
-  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
 }
 
-.weather-image {
-  filter: brightness(0) saturate(100%);
+.location-list-item div {
+  font-size: 1.125rem;
+}
+
+.location-list-item button {
+  font-size: 1.125rem;
+  padding: 0.5rem 2rem;
+  background-color: var(--col-mid-light);
+  border-radius: 1.125rem;
+}
+
+.location-list-item button:hover { 
+  background-color: var(--col-mid);
+  border-radius: 1.125rem;
+}
+
+.weather.visible {
+  margin-top: 3rem;
+  font-size: 1.125rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  gap: 2rem;
+
+  width: 50%;
+
+  padding: 2rem;
+  border: 0.25rem solid var(--col-mid-dark);
+  border-radius: 1rem;
+}
+
+.weather-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.weather-location-name {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.weather-main {
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+
+  justify-items: center;
+  align-items: center;
+}
+
+.weather-main-hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+  width: 100%;
+
+  gap: 0.5rem;
+}
+
+.weather-temperature {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+
+  width: 100%;
+  font-size: 4rem;
+  gap: 1.5rem;
+}
+
+.weather-icon {
+  width: min(70%, 5rem);
+}
+
+.weather-feels-like {
+  font-size: 1.25rem;
+}
+
+.weather-description {
+  font-size: 1.5rem;
+}
+
+.weather-main-sidebar,
+.weather-extras {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  gap: 2rem;
+}
+
+.weather-extras {
+  align-items: flex-start;
+  gap: 0.5rem;
 }

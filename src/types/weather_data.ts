@@ -7,6 +7,8 @@
   export type WeatherData = {
     time: string;
     temperature: string;
+    temperatureHigh: string;
+    temperatureLow: string;
     apparentTemperature: string;
     isDay: boolean;
     weatherStatus: WeatherStatus;
@@ -14,4 +16,6 @@
     windGusts: string;
     windSpeed: string;
     surfacePressure: string;
+    sunrise: string;
+    sunset: string;
   };

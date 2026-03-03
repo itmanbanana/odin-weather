@@ -1,5 +1,7 @@
 import { Location } from "./location.js";
 import { Weather } from "./weather.js";
+import sunrisePath from "./images/sunrise.svg";
+import sunsetPath from "./images/sunset.svg";
 const DisplayController = (() => {
     const locationSearchInput = document.querySelector("input#location-search-input");
     const locationSearchButton = document.querySelector("button.location-search-button");
@@ -46,46 +48,45 @@ const DisplayController = (() => {
     };
     const refreshWeatherDisplay = (locationData, weatherData) => {
         console.log(weatherData);
-        weatherContainer.innerHTML = "";
-        const locationTitle = document.createElement("div");
-        const weatherImage = document.createElement("img");
-        const weatherCaption = document.createElement("div");
-        const weatherTemperature = document.createElement("div");
-        const weatherFeelsLike = document.createElement("div");
-        const weatherExtraDetails = document.createElement("div");
-        const weatherWindDirection = document.createElement("div");
-        const weatherWindGust = document.createElement("div");
-        const weatherWindSpeed = document.createElement("div");
-        const weatherSurfacePressure = document.createElement("div");
-        locationTitle.className = "weather-location-title";
-        weatherImage.className = "weather-image";
-        weatherCaption.className = "weather-image-caption";
-        weatherTemperature.className = "weather-temperature";
-        weatherExtraDetails.className = "weather-extra-details";
-        weatherFeelsLike.className = "weather-temperature-feelslike";
-        weatherWindDirection.className = "weather-wind-direction";
-        weatherWindGust.className = "weather-wind-gust";
-        weatherWindSpeed.className = "weather-wind-speed";
-        weatherSurfacePressure.className = "weather-wind-surface-pressure";
-        locationTitle.textContent = `${locationData.name}, ${locationData.state}, ${locationData.country}`;
-        weatherImage.src = (weatherData.isDay) ? weatherData.weatherStatus.imagePathDay : weatherData.weatherStatus.imagePathNight;
-        weatherCaption.textContent = weatherData.weatherStatus.caption;
-        weatherTemperature.textContent = weatherData.temperature;
-        weatherFeelsLike.textContent = `Feels like: ${weatherData.apparentTemperature}`;
-        weatherWindDirection.textContent = `Wind Direction: ${weatherData.windDirection}`.replace("%", "°");
-        weatherWindGust.textContent = `Wind Gusts: ${weatherData.windGusts}`;
-        weatherWindSpeed.textContent = `Wind Speed: ${weatherData.windSpeed}`;
-        weatherSurfacePressure.textContent = `Surface Pressure: ${weatherData.surfacePressure}`;
-        weatherExtraDetails.appendChild(weatherWindDirection);
-        weatherExtraDetails.appendChild(weatherWindGust);
-        weatherExtraDetails.appendChild(weatherWindSpeed);
-        weatherExtraDetails.appendChild(weatherSurfacePressure);
-        weatherContainer.appendChild(locationTitle);
-        weatherContainer.appendChild(weatherImage);
-        weatherContainer.appendChild(weatherCaption);
-        weatherContainer.appendChild(weatherTemperature);
-        weatherContainer.appendChild(weatherFeelsLike);
-        weatherContainer.appendChild(weatherExtraDetails);
+        weatherContainer.className = "weather visible";
+        weatherContainer.innerHTML = `
+      <div class="weather-header">
+        <div class="weather-location-name">${locationData.name}, ${locationData.state}, ${locationData.country}</div>
+        <div class="weather-location-time">${weatherData.time}</div>
+      </div>
+      <div class="weather-main">
+        <div class="weather-main-hero">
+          <div class="weather-temperature">
+            <img src="${(weatherData.isDay) ? weatherData.weatherStatus.imagePathDay : weatherData.weatherStatus.imagePathNight}" alt="" class="weather-icon">
+            <div class="weather-temperature-text">${weatherData.temperature}</div>
+          </div>
+          <div class="weather-feels-like">${weatherData.apparentTemperature}</div>
+          <div class="weather-description">${weatherData.weatherStatus.caption}</div>
+        </div>
+        <div class="weather-main-sidebar">
+          <div class="weather-sunrise-sunset">
+            <div class="weather-sunrise">
+              <img src="${sunrisePath}" alt="" class="weather-sunrise-icon">
+              ${weatherData.sunrise}
+            </div>
+            <div class="weather-sunset">
+              <img src="${sunsetPath}" alt="" class="weather-sunset-icon">
+              ${weatherData.sunset}
+            </div>
+          </div>
+          <div class="weather-temperature-high-low">
+            <div class="weather-temperature-high"><b>H: </b> ${weatherData.temperatureHigh}</div>
+            <div class="weather-temperature-low"><b>L: </b> ${weatherData.temperatureLow}</div>
+          </div>
+        </div>  
+      </div>
+      <div class="weather-extras">
+        <div class="weather-wind-direction"><b>Wind Direction:</b> ${weatherData.windDirection}</div>
+        <div class="weather-wind-gusts"><b>Wind Gusts:</b> ${weatherData.windGusts}</div>
+        <div class="weather-wind-speed"><b>Wind Speed:</b> ${weatherData.windSpeed}</div>
+        <div class="weather-surface-pressure"><b>Surface Pressure:</b> ${weatherData.surfacePressure}</div>
+      </div>
+    `;
     };
     locationSearchButton.addEventListener("click", queryLocation);
 })();
